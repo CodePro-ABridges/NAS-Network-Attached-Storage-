@@ -1,6 +1,7 @@
+import { FaFileAlt, FaFolder } from "react-icons/fa";
 import "./ShowItems.css";
 
-const ShowItems = ({ title, items }) => {
+const ShowItems = ({ title, items, type }) => {
   return (
     <div className="w-full">
       {" "}
@@ -10,7 +11,12 @@ const ShowItems = ({ title, items }) => {
         {items.map((item, index) => {
           return (
             <p key={index * 55} className="md:w-2/12 p-5 text-center border">
-              {item}
+              {type == "folder" ? (
+                <FaFolder className="mx-auto text-3xl" />
+              ) : (
+                <FaFileAlt className="mx-auto text-3xl" />
+              )}
+              {item.name}
             </p>
           );
         })}

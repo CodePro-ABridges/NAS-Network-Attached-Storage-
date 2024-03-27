@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
+import { BiLogOutCircle } from "react-icons/bi";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FaFileMedical, FaFileUpload, FaFolderPlus } from "react-icons/fa";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
@@ -49,7 +50,7 @@ const NavBar = () => {
     isAuthenticated && {
       action: handleLogout,
       name: "Logout",
-      icon: RiSettings4Line,
+      icon: BiLogOutCircle,
     },
   ].filter(Boolean);
 
