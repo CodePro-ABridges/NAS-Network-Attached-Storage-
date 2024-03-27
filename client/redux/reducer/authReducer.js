@@ -1,3 +1,5 @@
+import * as types from "../actions/authActions.js";
+
 const initState = {
   isAuthenticated: false,
   user: {},
@@ -5,13 +7,13 @@ const initState = {
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
-    case "LOGIN_USER":
+    case types.SIGN_IN:
       return {
         ...state,
         isAuthenticated: true,
         user: action.payload,
       };
-    case "SIGN_OUT_USER":
+    case types.SIGN_OUT:
       return {
         ...state,
         isAuthenticated: false,

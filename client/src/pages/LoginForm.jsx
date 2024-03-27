@@ -1,12 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { signInUser } from "../../redux/actionCreators/authActionCreator";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
+  //State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState("");
+
+  //redux dispatch
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //handle submitform
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      alert("Please fill in all fields");
+      return;
+    }
+    dispatch(signInUser(email, password));
+  };
+
+  useEffect(() => {
+    if (success) {
+      navigate("/dashboard");
+    }
+  }, [success]);
 
   return (
-    <form className="bg-white px-10 py-20 rounded-3xl border-2 border-gray-200">
-      <h1 className="text-5xl font-semibold">Welcome Back</h1>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white px-10 py-20 rounded-3xl border-2 border-gray-200"
+    >
+      <h1 className="text-5xl font-semibold text-center">Welcome Back</h1>
       <div className="mt-8">
         <div>
           <label className="text-lg font-medium">Email</label>
@@ -37,6 +66,11 @@ const LoginForm = () => {
           >
             Sign in
           </button>
+        </div>
+        <div className="mt-3 justify-self-center">
+          <Link to="/register" className="text-center">
+            Not registered? Click HERE
+          </Link>
         </div>
       </div>
     </form>
