@@ -3,6 +3,7 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
+import { FaFileMedical, FaFileUpload, FaFolderPlus } from "react-icons/fa";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,16 +35,16 @@ const NavBar = () => {
       icon: FiMessageSquare,
     },
     isAuthenticated && {
-      name: "Analytics",
+      name: "Create File",
       link: "/",
-      icon: TbReportAnalytics,
+      icon: FaFileMedical,
     },
     isAuthenticated && { name: "File Manager", link: "/", icon: FiFolder },
-    isAuthenticated && { name: "Cart", link: "/", icon: FiShoppingCart },
+    isAuthenticated && { name: "Create Folder", link: "/", icon: FaFolderPlus },
     isAuthenticated && {
-      name: "Saved",
+      name: "Upload File",
       link: "/",
-      icon: AiOutlineHeart,
+      icon: FaFileUpload,
     },
     isAuthenticated && {
       action: handleLogout,

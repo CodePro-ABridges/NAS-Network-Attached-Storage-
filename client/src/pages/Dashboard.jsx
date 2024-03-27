@@ -1,8 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import HomeComponent from "../components/HomeComponent/HomeComponent";
+import SubBar from "../components/SubBarComponent/SubBar";
+import CreateFolder from "../components/DashboardComponents/CreateFolder/CreateFolder";
 
 const Dashboard = () => {
+  const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] = useState(false);
+
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
 
@@ -13,8 +18,14 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-semibold">Dashboard</h1>
+    <div className="flex flex-col items-center w-full">
+      <h1 className="text-2xl font-semibold my-8">Welcome to Dashboard</h1>
+
+      {isCreateFolderModalOpen && (
+        <CreateFolder setIsCreateFolderModalOpen={setIsCreateFolderModalOpen} />
+      )}
+      <SubBar setIsCreateFolderModalOpen={setIsCreateFolderModalOpen} />
+      <HomeComponent />
     </div>
   );
 };
