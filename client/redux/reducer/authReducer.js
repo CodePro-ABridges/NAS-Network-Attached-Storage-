@@ -1,19 +1,22 @@
-const initState = {};
+const initState = {
+  isAuthenticated: false,
+  user: {},
+};
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
-    // case "LOGIN":
-    //   return {
-    //     ...state,
-    //     isAuthenticated: true,
-    //     user: action.payload,
-    //   };
-    // case "LOGOUT":
-    //   return {
-    //     ...state,
-    //     isAuthenticated: false,
-    //     user: {},
-    //   };
+    case "LOGIN_USER":
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
+      };
+    case "SIGN_OUT_USER":
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: {},
+      };
     default:
       return state;
   }

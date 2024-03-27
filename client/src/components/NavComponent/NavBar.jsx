@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 import Dashboard from "../../pages/Dashboard.jsx";
 const NavBar = () => {
   const menus = [
-    { name: "NAS Dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "Login", link: "/", icon: AiOutlineUser },
-    { name: "Register", link: "/", icon: FiMessageSquare },
+    { name: "NAS Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
+    { name: "Login", link: "/login", icon: AiOutlineUser },
+    { name: "Register", link: "/register", icon: FiMessageSquare },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },

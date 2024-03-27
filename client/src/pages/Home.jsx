@@ -1,10 +1,10 @@
 import React from "react";
-import NavBar from "../components/NavComponent/NavBar.jsx";
+
 const Home = () => {
   return (
-    <>
-      <NavBar />
-    </>
+    <div>
+      <h1> Welcome to the homepage </h1>
+    </div>
   );
 };
 
