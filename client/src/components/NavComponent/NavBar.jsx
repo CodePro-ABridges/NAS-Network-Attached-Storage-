@@ -4,7 +4,12 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
 import { BiLogOutCircle } from "react-icons/bi";
 import { TbReportAnalytics } from "react-icons/tb";
-import { FaFileMedical, FaFileUpload, FaFolderPlus } from "react-icons/fa";
+import {
+  FaFileMedical,
+  FaFileUpload,
+  FaFolderPlus,
+  FaUserPlus,
+} from "react-icons/fa";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
@@ -33,7 +38,7 @@ const NavBar = () => {
     !isAuthenticated && {
       name: "Register",
       link: "/register",
-      icon: FiMessageSquare,
+      icon: FaUserPlus,
     },
     isAuthenticated && {
       name: "Create File",

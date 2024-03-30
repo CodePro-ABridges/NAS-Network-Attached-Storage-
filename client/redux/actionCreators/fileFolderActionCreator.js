@@ -23,34 +23,41 @@ const setLoading = (payload) => ({
 
 //action creators
 //
-export const createFolder = (data) => (dispatch) => {
-  console.log(data);
-  fire
-    .firestore()
-    .collection("folders")
-    .add(data)
-    .then(async (folder) => {
-      //retrieving data
-      const folderData = await (await folder.get()).data();
+export const createFolder = (data) => async (dispatch) => {
+  try {
+    const folderRef = await fire.firestore().collection("folders").add(data);
+    const folderSnapshot = await folderRef.get();
+    const folderData = folderSnapshot.data();
+    const folderId = folderRef.id;
 
-      dispatch(addFolder(folderData));
-      alert("Folder Created!");
-    });
+    dispatch(addFolder({ data: folderData, docId: folderId }));
+    alert("Folder Created!");
+  } catch (error) {
+    console.error("Error creating folder: ", error);
+  }
 };
 
-export const getFolders = (userId) => (dispatch) => {
-  //data handling
+export const getFolders = (userId) => async (dispatch) => {
+  //fetch data then once finish stop loading.
   dispatch(setLoading(true));
 
-  fire
-    .firestore()
-    .collection("folders")
-    .where("userId", "==", userId)
-    .get()
-    .then(async (folders) => {
-      const folderData = await folders.docs.map((folder) => folder.data());
-      dispatch(addFolders(folderData));
-      //after fetching of all folders
-      dispatch(setLoading(false));
-    });
+  try {
+    const foldersSnapshot = await fire
+      .firestore()
+      .collection("folders")
+      .where("userId", "==", userId)
+      .get();
+
+    const foldersData = foldersSnapshot.docs.map((doc) => ({
+      data: doc.data(),
+      docId: doc.id,
+    }));
+    dispatch(setLoading(false));
+    dispatch(addFolders(foldersData));
+  } catch (error) {
+    console.error("Error fetching folders: ", error);
+  } // finally {
+  //   //Turning off fetch data after the fetching finishes.
+  //   dispatch(setLoading(false));
+  // }
 };

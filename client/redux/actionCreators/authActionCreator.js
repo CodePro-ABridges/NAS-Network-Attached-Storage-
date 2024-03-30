@@ -1,89 +1,73 @@
 import * as types from "../actions/authActions.js";
 import fire from "../../config/firebase.js";
 
-//email and password will be in payload
-const loginUser = (payload) => {
-  return {
-    type: types.SIGN_IN,
-    payload,
-  };
+// Actions
+const loginUser = (payload) => ({
+  type: types.SIGN_IN,
+  payload,
+});
+
+const logoutUser = () => ({
+  type: types.SIGN_OUT,
+});
+
+// Action Creators
+export const signInUser = (email, password, setSuccess) => async (dispatch) => {
+  try {
+    const userCredential = await fire
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+    dispatch(
+      loginUser({
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        displayName: userCredential.user.displayName,
+      }),
+    );
+    setSuccess(true);
+  } catch (error) {
+    console.error(error);
+    alert("Invalid Credentials!");
+  }
 };
 
-const logoutUser = () => {
-  return {
-    type: types.SIGN_OUT,
-  };
-};
-
-//action creator
-//
-export const signInUser = (email, password, setSuccess) => (dispatch) => {
-  fire
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then((user) => {
+export const signUpUser =
+  (name, email, password, setSuccess) => async (dispatch) => {
+    try {
+      const userCredential = await fire
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+      await userCredential.user.updateProfile({
+        displayName: name,
+      });
+      const currentUser = fire.auth().currentUser;
       dispatch(
         loginUser({
-          uid: user.user.uid,
-          email: user.user.email,
-          displayName: user.user.displayName,
+          uid: currentUser.uid,
+          name: currentUser.displayName,
+          email: currentUser.email,
         }),
       );
       setSuccess(true);
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Invalid Credentials!");
-    });
-};
-
-export const signUpUser = (name, email, password, setSuccess) => (dispatch) => {
-  fire
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then((user) => {
-      fire
-        .auth()
-        .currentUser.updateProfile({
-          displayName: name,
-        })
-        .then(async () => {
-          const currentUser = await fire.auth().currentUser;
-          dispatch(
-            loginUser({
-              uid: currentUser.uid,
-              name: currentUser.displayName,
-              email: currentUser.email,
-            }),
-          );
-
-          //Work around for a redirect since I cannot use Nav
-          setSuccess(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    })
-    .catch((error) => {
-      if (error.code == "auth/email-already-in-use") {
+    } catch (error) {
+      console.error(error);
+      if (error.code === "auth/email-already-in-use") {
         alert("Email already in use!!");
-      }
-      if (error.code == "auth/invalid-email") {
+      } else if (error.code === "auth/invalid-email") {
         alert("Invalid email!!");
+      } else if (error.code === "auth/weak-password") {
+        alert("Create a STRONG password!");
       }
-      if (error.code == "auth/weak-password") {
-        alert("Create a STRONG password !");
-      }
-    });
-};
+    }
+  };
 
-export const signOutUser = () => (dispatch) => {
-  fire
-    .auth()
-    .signOut()
-    .then(() => {
-      dispatch(logoutUser());
-    });
+export const signOutUser = () => async (dispatch) => {
+  try {
+    await fire.auth().signOut();
+    dispatch(logoutUser());
+  } catch (error) {
+    console.error("Error signing out: ", error);
+  }
 };
 
 export const checkIsLoggedIn = () => (dispatch) => {

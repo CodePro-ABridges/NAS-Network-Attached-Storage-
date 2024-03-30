@@ -5,6 +5,8 @@ import HomeComponent from "../components/HomeComponent/HomeComponent";
 import SubBar from "../components/SubBarComponent/SubBar";
 import CreateFolder from "../components/DashboardComponents/CreateFolder/CreateFolder";
 import { getFolders } from "../../redux/actionCreators/fileFolderActionCreator";
+import { Route, Routes } from "react-router-dom";
+import FolderComponent from "../components/DashboardComponents/FolderComponent/FolderComponent";
 
 const Dashboard = () => {
   const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] = useState(false);
@@ -26,7 +28,7 @@ const Dashboard = () => {
     if (!isLoggedIn) {
       navigate("/login");
     }
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   //useEffect for retrieving data
   useEffect(() => {
@@ -43,7 +45,10 @@ const Dashboard = () => {
         <CreateFolder setIsCreateFolderModalOpen={setIsCreateFolderModalOpen} />
       )}
       <SubBar setIsCreateFolderModalOpen={setIsCreateFolderModalOpen} />
-      <HomeComponent />
+      <Routes>
+        <Route path="" element={<HomeComponent />} />
+        <Route path="folder/:folderId" element={<FolderComponent />} />
+      </Routes>
     </div>
   );
 };

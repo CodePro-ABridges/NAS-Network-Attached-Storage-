@@ -47,7 +47,7 @@ const CreateFolder = ({ setIsCreateFolderModalOpen }) => {
             updatedAt: new Date(),
           };
           //Console Logging Data after submission.
-          console.log(data);
+          // console.log(data);
 
           //passing data to action creator
           dispatch(createFolder(data));
