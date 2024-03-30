@@ -28,7 +28,7 @@ What you need to install the software:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/your-file-management-system.git
+git clone https://github.com/CodePro-ABridges/NAS-Network-Attached-Storage.git
 
     Install NPM packages:
 
@@ -68,5 +68,4 @@ Acknowledgments
     React.js for the powerful UI library.
     Firebase for providing a comprehensive app development platform.
     Redux for managing the app's state beautifully.
-    And every contributor who has helped this project come to life. "
 ```
