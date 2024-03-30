@@ -39,25 +39,26 @@ npm install
 
     Set up Firebase:
 
-    Go to the Firebase Console and create a new project.
-    Add your project's Firebase configuration to a .env file at the root of your project.
+Go to the Firebase Console and create a new project.
+Add your project's Firebase configuration to a .env file at the root of your project.
 
-env
+env:
 
-REACT_APP_FIREBASE_API_KEY=your_api_key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
-REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-REACT_APP_FIREBASE_APP_ID=your_app_id
+VITE_API_KEY=your_api_key
+VITE_AUTH_DOMAIN=your_auth_domain
+VITE_PROJECT_ID=your_project_id
+VITE_STORAGE_BUCKET=your_storage_bucket
+VITE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_APP_ID=your_app_id
 
-    Run the application:
+Run the application:
 
 bash
 
 npm run dev
 
 This will start the application and open it in your default browser. If it doesn't open automatically, visit http://localhost:3000.
+
 Usage
 
 License
