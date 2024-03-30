@@ -4,8 +4,6 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store from "../redux/store.js";
 
-// Define a basic router
-// Use RouterProvider to wrap your App component
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
