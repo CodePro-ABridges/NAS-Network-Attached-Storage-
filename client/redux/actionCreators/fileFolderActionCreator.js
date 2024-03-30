@@ -56,8 +56,5 @@ export const getFolders = (userId) => async (dispatch) => {
     dispatch(addFolders(foldersData));
   } catch (error) {
     console.error("Error fetching folders: ", error);
-  } // finally {
-  //   //Turning off fetch data after the fetching finishes.
-  //   dispatch(setLoading(false));
-  // }
+  }
 };
