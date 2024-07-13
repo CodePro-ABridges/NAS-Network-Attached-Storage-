@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { uploadSingleFile } from "../middleware/fileMiddleware";
-import { File } from "../schemas";
+import { uploadSingleFile } from "../middleware/fileMiddleware.ts";
+import { File } from "../schemas/index.ts";
 import fs from "node:fs/promises";
 import multer from "multer";
 

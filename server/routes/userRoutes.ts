@@ -1,6 +1,10 @@
 import express from "express";
-import { register, login, fetchProfile } from "../controllers/userController";
-import auth from "../middleware/auth";
+import {
+  register,
+  login,
+  fetchProfile,
+} from "../controllers/userController.ts";
+import auth from "../middleware/auth.ts";
 
 const router = express.Router();
 

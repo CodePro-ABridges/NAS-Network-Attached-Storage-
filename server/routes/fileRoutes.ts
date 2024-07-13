@@ -3,9 +3,9 @@ import {
   downloadFile,
   deleteFile,
   fetchFiles,
-} from "../controllers/fileController";
+} from "../controllers/fileController.ts";
 import express from "express";
-import auth from "../middleware/auth";
+import auth from "../middleware/auth.ts";
 
 const router = express.Router();
 
