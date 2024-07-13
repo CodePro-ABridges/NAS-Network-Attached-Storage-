@@ -2,22 +2,21 @@
   "name": "NAS",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.js",
-  "Important for MERN Setup": {
-    "line-10": "We use this top-level package.json file to define scripts we can run to control our entire application from the same CLI location",
-    "line-21": "The concurrently npm tool allows us to execute two CLI processes... concurrently!"
-  },
+  "type": "module",
+  "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "develop": "cd client && npm run dev",
-    "install": "cd client && npm i",
-    "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run dev --prefix client",
+    "server": "nodemon --exec ts-node --esm server/server.ts",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }
