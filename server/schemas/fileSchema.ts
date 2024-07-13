@@ -11,7 +11,7 @@ export interface IFile extends Document {
   updatedAt: Date;
 }
 
-const fileSchema = new Schema<File>(
+const fileSchema = new Schema<IFile>(
   {
     filename: { type: String, required: true },
     path: { type: String, required: true },
