@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { uploadSingleFile } from "../middleware/fileMiddleware";
 import { File } from "../schemas";
+import fs from "node:fs/promises";
 import multer from "multer";
 
 //Upload
@@ -38,12 +39,28 @@ export const uploadFile = async (req: Request, res: Response) => {
 };
 
 //Download File
-export const downloadFile = async (req: Request, res: Response) => {};
+export const downloadFile = async (req: Request, res: Response) => {
+  try {
+    const file = await File.findOne({
+      _id: req.params.id,
+      owner: req.user?.userId,
+    });
+    if (!file) {
+      return res.status(404).json({ message: "File not found" });
+    }
+    const fileContent = await fs.readFile(file.path);
+    res.contentType(file.mimetype);
+    res.send(fileContent);
+  } catch (err) {
+    console.error("Error downloading file: ", err);
+    res.status(500).json({ message: "Error downloading file" });
+  }
+};
 
 //fetch all files
 export const fetchFiles = async (req: Request, res: Response) => {
   try {
-    const files = await File.find({ owner: req.user.userId });
+    const files = await File.find({ owner: req.user?.userId });
     res.json(files);
   } catch (err) {
     res.status(500).json({ message: "Error fetching files" });
@@ -55,11 +72,13 @@ export const deleteFile = async (req: Request, res: Response) => {
   try {
     const file = await File.findOneAndDelete({
       _id: req.params.id,
-      owner: req.user.userId,
+      owner: req.user?.userId,
     });
     if (!file) {
       return res.status(404).json({ message: "File not found" });
     }
+    //Remove path from file system
+    await fs.unlink(file.path);
     res.json({ message: "File deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: "Error deleting file" });
