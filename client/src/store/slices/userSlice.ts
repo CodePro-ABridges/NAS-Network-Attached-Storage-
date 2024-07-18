@@ -28,14 +28,14 @@ interface UserResponse {
   email: string;
   token: string;
 }
-
+console.log("ALL .ENV VARS: ", import.meta.env);
 const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 export const registerUser = createAsyncThunk<UserResponse, RegisterPayload>(
   "user/register",
   async (userData: RegisterPayload, { rejectWithValue }) => {
     try {
-      console.log("API_ENDPOINT: ", API_ENDPOINT);
+      console.log("API_ENDPOINT: ", API_ENDPOINT); //returning undefined
       const response = await axios.post<UserResponse>(
         `${API_ENDPOINT}/register`,
         userData,
