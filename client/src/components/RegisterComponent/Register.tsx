@@ -35,7 +35,7 @@ const RegisterForm: React.FC = () => {
 
     try {
       const resultAction = await dispatch(
-        registerUser({ username: name, email, password }),
+        registerUser({ username, email, password }),
       );
       if (registerUser.fulfilled.match(resultAction)) {
         navigate("/dashboard");

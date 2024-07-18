@@ -11,7 +11,7 @@ const App: React.FC = () => {
       <main className="w-full h-screen flex flex-row relative">
         <Router>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/login" element={<LoginForm />} />
           </Routes>

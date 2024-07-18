@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks.ts";
 import { loginUser } from "../../store/slices/userSlice.ts";
 import { setError, clearError } from "../../store/slices/errorSlice.ts";
@@ -13,9 +13,18 @@ const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.user);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(loginUser({ email, password }));
+    try {
+      const resultAction = await dispatch(loginUser({ email, password }));
+      if (loginUser.fulfilled.match(resultAction)) {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      dispatch(setError("Registration failed"));
+    }
   };
 
   return (
