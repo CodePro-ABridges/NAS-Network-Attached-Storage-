@@ -1,14 +1,24 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./components/DashboardComponent/dashboard.tsx";
+import LoginForm from "./components/LoginComponent/Login.tsx";
+import RegisterForm from "./components/RegisterComponent/Register.tsx";
 import "./index.css";
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
-      <div>
-        <p className="text-custom-blue">TEST</p>
-      </div>
+      <main className="w-full h-screen flex flex-row relative">
+        <Router>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/login" element={<LoginForm />} />
+          </Routes>
+        </Router>
+      </main>
     </>
   );
-}
+};
 
 export default App;

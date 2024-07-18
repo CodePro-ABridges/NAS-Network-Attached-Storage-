@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/connectionDB.ts";
 import userRoutes from "./routes/userRoutes.ts";
 import fileRoutes from "./routes/fileRoutes.ts";
+import cors from "cors";
 
 //Bring env variables
 dotenv.config();
@@ -10,6 +11,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+//apply middleware
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 app.use(express.json());
 
 const startServer = async () => {

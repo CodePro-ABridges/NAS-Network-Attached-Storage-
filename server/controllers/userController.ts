@@ -9,6 +9,7 @@ export const register = async (req: Request, res: Response) => {
     await user.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
+    console.error("Registration error: ", err);
     res.status(500).json({ message: "Error registering user" });
   }
 };
@@ -18,7 +19,7 @@ export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     //conditional
-    if (!user || (await user.comparePassword(password))) {
+    if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
