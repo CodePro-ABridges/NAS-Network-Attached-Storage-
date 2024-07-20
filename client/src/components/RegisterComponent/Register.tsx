@@ -6,10 +6,12 @@ import { setError, clearError } from "../../store/slices/errorSlice.ts";
 import AuthModal from "../ModalComponents/authModal/authModal.tsx";
 
 const RegisterForm: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [username, setUsername] = useState("");
+  const [registerForm, setRegisterForm] = useState({
+    email: "",
+    username: "",
+    password: "",
+    passwordConfirmation: "",
+  });
 
   //redux
   const dispatch = useAppDispatch();
@@ -17,8 +19,23 @@ const RegisterForm: React.FC = () => {
   const { message: errorMessage } = useAppSelector((state) => state.error);
   const navigate = useNavigate();
 
+  //Handle Change in form.
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //Destructure objects from event.target.
+    const { name, value } = e.target;
+
+    //Updating state.
+    setRegisterForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    //get objects from Form.
+    const { email, username, password, passwordConfirmation } = registerForm;
 
     if (!email) {
       dispatch(setError("Email is required"));
@@ -44,10 +61,14 @@ const RegisterForm: React.FC = () => {
       dispatch(setError("Registration failed"));
     }
   };
+
   return (
     <div className="w-screen h-screen flex top-0 justify-center items-center">
       {error && (
-        <AuthModal message={error} onClose={() => dispatch(clearError())} />
+        <AuthModal
+          message={errorMessage}
+          onClose={() => dispatch(clearError())}
+        />
       )}
       <div className="bg-white p-6 rounded-lg shadow-lg border border-neutral-700 w-3/4 sm:w-1/2 md:w-1/3">
         <form onSubmit={handleSubmit}>
@@ -60,8 +81,8 @@ const RegisterForm: React.FC = () => {
               type="email"
               name="email"
               placeholder="Enter the email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={registerForm.email}
+              onChange={handleChange}
             />
           </div>
           {/*name div*/}
@@ -72,8 +93,8 @@ const RegisterForm: React.FC = () => {
               type="text"
               name="username"
               placeholder="Enter the username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={registerForm.username}
+              onChange={handleChange}
             />
           </div>
           {/*Password div*/}
@@ -84,8 +105,8 @@ const RegisterForm: React.FC = () => {
               type="password"
               name="password"
               placeholder="Enter the password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={registerForm.password}
+              onChange={handleChange}
             />
           </div>
           {/*Password confirmation div*/}
@@ -96,8 +117,8 @@ const RegisterForm: React.FC = () => {
               type="password"
               name="passwordConfirmation"
               placeholder="Confirm password"
-              value={passwordConfirmation}
-              onChange={(e) => setPasswordConfirmation(e.target.value)}
+              value={registerForm.passwordConfirmation}
+              onChange={handleChange}
             />
           </div>
           {/*Button submit div*/}

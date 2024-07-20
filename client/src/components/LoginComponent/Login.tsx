@@ -6,8 +6,11 @@ import { setError, clearError } from "../../store/slices/errorSlice.ts";
 import AuthModal from "../ModalComponents/authModal/authModal.tsx";
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  //State
+  const [loginForm, setLoginForm] = useState({
+    email: "",
+    password: "",
+  });
 
   //redux
   const dispatch = useAppDispatch();
@@ -15,8 +18,22 @@ const LoginForm: React.FC = () => {
 
   const navigate = useNavigate();
 
+  //Handle Change
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //Get objects from event.target.
+    const { name, value } = e.target;
+
+    //Update state
+    setLoginForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    //Destructure objects from loginForm.
+    const { email, password } = loginForm;
     try {
       const resultAction = await dispatch(loginUser({ email, password }));
       if (loginUser.fulfilled.match(resultAction)) {
@@ -42,9 +59,9 @@ const LoginForm: React.FC = () => {
               className="mb-3 w-full rounded items-center border border-gray-300 p-2"
               type="email"
               name="email"
-              value={email}
+              value={loginForm.email}
               placeholder="Enter the email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           {/*Password div*/}
@@ -54,9 +71,9 @@ const LoginForm: React.FC = () => {
               className="mb-3 w-full rounded items-center border border-gray-300 p-2"
               type="password"
               name="password"
-              value={password}
+              value={loginForm.password}
               placeholder="Enter the password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           {/*button div*/}
