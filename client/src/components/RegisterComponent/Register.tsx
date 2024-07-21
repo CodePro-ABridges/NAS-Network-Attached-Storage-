@@ -6,6 +6,7 @@ import { setError, clearError } from "../../store/slices/errorSlice.ts";
 import AuthModal from "../ModalComponents/authModal/authModal.tsx";
 
 const RegisterForm: React.FC = () => {
+  //State
   const [registerForm, setRegisterForm] = useState({
     email: "",
     username: "",
