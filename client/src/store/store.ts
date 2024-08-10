@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice.ts";
 import errorReducer from "./slices/errorSlice.ts";
 import navbarReducer from "./slices/navbarSlice.ts";
+import fileReducer from "./slices/fileSlice.ts";
 
 export const store = configureStore({
   //reducers
@@ -9,6 +10,7 @@ export const store = configureStore({
     user: userReducer,
     error: errorReducer,
     navbar: navbarReducer,
+    file: fileReducer,
   },
 });
 
