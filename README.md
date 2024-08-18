@@ -1,72 +1,81 @@
-# NAS-File Management System
+# NAS File Management System
 
-## Introduction
+## Description
 
-A File Management System that is a robust and user-friendly web application designed to simplify the process of managing files online. Built with JavaScript, React.js, Firebase, and Redux, this system offers an intuitive interface for users to upload, download, categorize, and share their files efficiently. My goal is to provide a seamless file management experience that meets the needs of individual users and teams alike.
+This project is a modern, web-based file management system built with React, TypeScript, and Redux. It allows users to upload, organize, and download files and folders efficiently.
 
 ## Features
 
-- **User Authentication**: Secure signup and login functionality powered by Firebase Authentication.
-- **File Operations**: Upload, download, delete, and preview files with ease.
-- **Real-time Database**: Files and folders are managed in real-time with Firebase Firestore.
-- **State Management**: Redux ensures a consistent state across the app, providing a smooth user experience.
-- **Responsive Design**: Accessible on any device, whether desktop, tablet, or mobile.
-- **Sharing and Permissions**: Share files or folders with others and set viewing or editing permissions.
+- User authentication (login/register)
+- File upload and download
+- Folder creation and management
+- Interactive dashboard for file and folder viewing
+- Responsive design for various screen sizes
 
-## Getting Started
+## Technologies Used
 
-### Prerequisites
+- React
+- TypeScript
+- Redux (with Redux Toolkit)
+- Framer Motion for animations
+- Axios for API requests
+- Tailwind CSS for styling
 
-What you need to install the software:
+## Prerequisites
 
-- Node.js
-- NPM (Node Package Manager)
-- A Firebase account
+Before you begin, ensure you have met the following requirements:
 
-### Installation
+- Node.js (v14.0.0 or later)
+- npm (v6.0.0 or later)
+
+## Installation
 
 1. Clone the repository:
 
-```bash
-git clone https://github.com/CodePro-ABridges/NAS-Network-Attached-Storage.git
+git clone https://github.com/CodePro-ABridges/NAS-Network-Attached-Storage-
 
-    Install NPM packages:
+2. Navigate to the project directory:
 
-bash
+cd NAS-Network-Attached-Storage-
 
-cd your-file-management-system
+3. Install the dependencies:
+
 npm install
 
-    Set up Firebase:
+- cd server
+  npm install
+- cd client
+  npm install
 
-Go to the Firebase Console and create a new project.
-Add your project's Firebase configuration to a .env file at the root of your project.
+## Running the Application
 
-env:
+To run the application in development mode: npm run dev
 
-VITE_API_KEY=your_api_key
-VITE_AUTH_DOMAIN=your_auth_domain
-VITE_PROJECT_ID=your_project_id
-VITE_STORAGE_BUCKET=your_storage_bucket
-VITE_MESSAGING_SENDER_ID=your_messaging_sender_id
-VITE_APP_ID=your_app_id
+The application will start and can be accessed at `http://localhost:5173` (or another port if 5173 is in use).
 
-Run the application:
+## Building for Production
 
-bash
+To create a production build: npm run build
 
-npm run dev
+The built files will be in the `dist` directory.
 
-This will start the application and open it in your default browser. If it doesn't open automatically, visit http://localhost:3000.
+## Contributing
 
-Usage
+Contributions to this project are welcome. Please follow these steps:
 
-License
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/AmazingFeature`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+5. Push to the branch (`git push origin feature/AmazingFeature`)
+6. Open a Pull Request
 
-This project is licensed under the MIT License - see the LICENSE.md file for details.
-Acknowledgments
-    Special shoutout to Noah for helping iron things out.
-    React.js for the powerful UI library.
-    Firebase for providing a comprehensive app development platform.
-    Redux for managing the app's state beautifully.
-```
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Contact
+
+Arthur Bridges - arthurbridges08@yahoo.com
+
+Project Link: [https://github.com/CodePro-ABridges/NAS-Network-Attached-Storage-](https://github.com/CodePro-ABridges/NAS-Network-Attached-Storage-)
