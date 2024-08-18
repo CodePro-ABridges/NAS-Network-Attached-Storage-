@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"files" | "folders">("files");
 
   const dispatch = useAppDispatch();
-  const { files, folders, loading } = useAppSelector((state) => {
+  const { files, folders, loading, error } = useAppSelector((state) => {
     console.log("Current file state: ", state.file);
     return state.file;
   });
@@ -26,6 +26,14 @@ const Dashboard: React.FC = () => {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.5 } },
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error : {error}</p>;
+  }
 
   return (
     <motion.div
@@ -50,14 +58,8 @@ const Dashboard: React.FC = () => {
           Folders
         </button>
       </div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          {activeTab === "files" && <FileList files={files} />}
-          {activeTab === "folders" && <FolderList folders={folders} />}
-        </>
-      )}
+      {activeTab === "files" && <FileList files={files} />}
+      {activeTab === "folders" && <FolderList folders={folders} />}
     </motion.div>
   );
 };

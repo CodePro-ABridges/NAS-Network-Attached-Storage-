@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  isRejectedWithValue,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import { File, Folder } from "../../types.ts";
 
@@ -17,18 +21,23 @@ const initialState: FileState = {
 };
 
 export const fetchFiles = createAsyncThunk("file/fetchFiles", async () => {
-  const response = await axios.get("/api/files");
-  return response.data;
+  try {
+    const response = await axios.get("/api/files");
+    console.log("API RESPONSE: ", response);
+    if (!Array.isArray(response.data)) {
+      throw new Error("API did not return an array");
+    }
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching files: ", err);
+    return isRejectedWithValue(err.message);
+  }
 });
 
 export const fetchFolders = createAsyncThunk("file/fetchFolders", async () => {
   const response = await axios.get("/api/folders");
   console.log("Fetched Files: ", response.data);
-  return [
-    { id: "1", name: "File 1" },
-    { id: "2", name: "File 2" },
-  ];
-  /*   return response.data; */
+  return response.data;
 });
 
 export const uploadFile = createAsyncThunk(

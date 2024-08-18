@@ -9,6 +9,20 @@ interface FileListProps {
 const FileList: React.FC<FileListProps> = ({ files }) => {
   console.log("Files prop in FileList: ", files);
   //
+
+  if (!files) {
+    return <p>No files data available</p>;
+  }
+
+  if (!Array.isArray(files)) {
+    console.error("Files is not an array: ", files);
+    return <p>Error: Invalid file data</p>;
+  }
+
+  if (files.length === 0) {
+    return <p>No files available. </p>;
+  }
+
   const listVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transistion: { staggerChildren: 0.1 } },
@@ -18,10 +32,6 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacitiy: 1 },
   };
-
-  if (!files || files.length === 0) {
-    return <p>No Files available</p>;
-  }
 
   return (
     <motion.ul variants={listVariants} initial="hidden" animate="visible">
