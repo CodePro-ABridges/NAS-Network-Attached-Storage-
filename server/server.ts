@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/connectionDB.ts";
 import userRoutes from "./routes/userRoutes.ts";
 import fileRoutes from "./routes/fileRoutes.ts";
+import folderRoutes from "./routes/folderRoutes.ts";
 import cors from "cors";
 
 //Bring env variables
@@ -28,6 +29,7 @@ const startServer = async () => {
     //apply routes
     app.use("/api/users", userRoutes);
     app.use("/api/files", fileRoutes);
+    app.use("/api/folders", folderRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server is running on ${PORT}`);

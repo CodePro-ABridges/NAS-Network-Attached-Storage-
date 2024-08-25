@@ -32,11 +32,11 @@ Before you begin, ensure you have met the following requirements:
 
 1. Clone the repository:
 
-git clone https://github.com/CodePro-ABridges/NAS-Network-Attached-Storage-
+- git clone https://github.com/CodePro-ABridges/NAS-Network-Attached-Storage-
 
 2. Navigate to the project directory:
 
-cd NAS-Network-Attached-Storage-
+- cd NAS-Network-Attached-Storage-
 
 3. Install the dependencies:
 
