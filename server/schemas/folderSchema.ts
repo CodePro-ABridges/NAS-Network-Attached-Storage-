@@ -4,8 +4,8 @@ export interface IFolder extends Document {
   name: string;
   owner: mongoose.Types.ObjectId;
   parent: mongoose.Types.ObjectId | null;
-  files: mongoose.Types.ObjectId[];
-  subfolders: mongoose.Types.ObjectId[];
+  files: { _id: mongoose.Types.ObjectId; filename: string }[];
+  subfolders: IFolder[];
   sharedWith: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
