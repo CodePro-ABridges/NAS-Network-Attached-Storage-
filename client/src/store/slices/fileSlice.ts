@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { File, Folder } from "../../types.ts";
+import { RootState } from "../store.ts";
 
 interface FileState {
   files: File[];
@@ -20,15 +21,28 @@ const initialState: FileState = {
   error: null,
 };
 
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
+
 export const fetchFiles = createAsyncThunk(
   "file/fetchFiles",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const response = await axios.get("/api/files");
+      const state = getState() as RootState;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await axios.get(`${API_ENDPOINT}/files`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("API RESPONSE: ", response);
-      // if (!Array.isArray(response.data)) {
-      //   throw new Error("API did not return an array");
-      // }
+      if (!Array.isArray(response.data)) {
+        throw new Error("API did not return an array");
+      }
       return response.data;
     } catch (err) {
       console.error("Error fetching files: ", err);
@@ -53,13 +67,25 @@ export const fetchFiles = createAsyncThunk(
 
 export const fetchFolders = createAsyncThunk(
   "file/fetchFolders",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const response = await axios.get("/api/folders");
+      const state = getState() as RootState;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await axios.get(`${API_ENDPOINT}/folders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       console.log("Fetched Folders: ", response.data);
-      // if (!Array.isArray(response.data)) {
-      //   throw new Error("API did not return an array of folders");
-      // }
+      if (!Array.isArray(response.data)) {
+        throw new Error("API did not return an array of folders");
+      }
       return response.data;
     } catch (err) {
       console.error("Error fetching folders: ", err);
@@ -87,18 +113,30 @@ export const uploadFile = createAsyncThunk(
   "file/uploadFile",
   async (
     { file, folderId }: { file: File; folderId: string },
-    { rejectWithValue },
+    { rejectWithValue, getState },
   ) => {
     try {
+      const state = getState() as RootState;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("No token found");
+      }
+
       const formData = new FormData();
       formData.append("file", file);
       formData.append("folderId", folderId);
 
-      const response = await axios.post("/api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const response = await axios.post(
+        `${API_ENDPOINT}/files/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       //debug
       console.log("File upload response: ", response.data);
@@ -131,9 +169,24 @@ export const uploadFile = createAsyncThunk(
 
 export const createFolder = createAsyncThunk(
   "file/createFolder",
-  async (name: string, { rejectWithValue }) => {
+  async (name: string, { rejectWithValue, getState }) => {
     try {
-      const response = await axios.post("/api/folders", { name });
+      const state = getState() as RootState;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response = await axios.post(
+        `${API_ENDPOINT}/folders`,
+        { name },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
       //validation of response
       if (!response.data || typeof response.data !== "object") {

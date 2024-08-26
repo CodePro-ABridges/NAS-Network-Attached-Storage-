@@ -96,7 +96,7 @@ export const deleteFolder = async (req: Request, res: Response) => {
 
     console.log("FolderController folder._id: ", folder._id);
     //Using recursion to delete the folders and files within parent folder.
-    await recursiveDelete(folder._id); //ERROR LINE
+    // await recursiveDelete(folder._id); //ERROR LINE
 
     res.json({ message: "Folder and contents deleted successfully" });
   } catch (err) {

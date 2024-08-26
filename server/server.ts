@@ -28,7 +28,7 @@ const startServer = async () => {
 
     //apply routes
     app.use("/api/users", userRoutes);
-    app.use("/api/files", fileRoutes);
+    app.use("/api/files", fileRoutes); 
     app.use("/api/folders", folderRoutes);
 
     app.listen(PORT, () => {
