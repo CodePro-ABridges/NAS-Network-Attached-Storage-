@@ -12,6 +12,15 @@ This project is a modern, web-based file management system built with React, Typ
 - Interactive dashboard for file and folder viewing
 - Responsive design for various screen sizes
 
+## Screenshots
+<img width="1417" alt="Screenshot 2024-08-26 at 12 34 19 AM" src="https://github.com/user-attachments/assets/22aea482-2a64-4bc3-b616-1b8ded60533f">
+
+## Demo
+
+
+https://github.com/user-attachments/assets/e6b94af9-dcd8-4737-872e-71a9b7695bff
+
+
 ## Technologies Used
 
 - React
