@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Request, Response } from "express";
 import { Folder, File } from "../schemas/index.ts";
+import { IFolder } from "../schemas/folderSchema.ts";
 
 //Create new folder
 export const createFolder = async (req: Request, res: Response) => {
@@ -56,6 +57,47 @@ export const fetchFolder = async (req: Request, res: Response) => {
     res.json(folder);
   } catch (err) {
     res.status(500).json({ message: "Error fetching folder" });
+  }
+};
+
+//fetch folder contents
+export const fetchFolderContents = async (req: Request, res: Response) => {
+  try {
+    const folderId = req.params.id;
+    const userId = req.user?.userId;
+
+    //
+    const folder = await Folder.findOne({ _id: folderId, owner: userId })
+      .populate<{
+        files: { _id: mongoose.Types.ObjectId; filename: string }[];
+      }>("files")
+      .populate<{ subfolders: IFolder[] }>("subfolders");
+
+    if (!folder) {
+      return res.status(404).json({ message: "Folder not found" });
+    }
+
+    const folderContents = {
+      id: folder._id,
+      name: folder.name,
+      contents: [
+        ...folder.subfolders.map((subfolder) => ({
+          id: subfolder._id,
+          name: subfolder.name,
+          type: "folder" as const,
+        })),
+        ...folder.files.map((file) => ({
+          id: file._id,
+          name: file.filename,
+          type: "file" as const,
+        })),
+      ],
+    };
+
+    res.json(folderContents);
+  } catch (err) {
+    console.error("Error fetching folder contents: ", err);
+    res.status(500).json({ message: "Error fetching folder contents" });
   }
 };
 

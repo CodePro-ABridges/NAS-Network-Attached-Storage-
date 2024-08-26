@@ -12,6 +12,13 @@ interface FileState {
   folders: Folder[];
   loading: boolean;
   error: string | null;
+  currentFolder: FolderContents | null;
+}
+
+interface FolderContents {
+  id: string;
+  name: string;
+  contents: FolderItem[];
 }
 
 const initialState: FileState = {
@@ -103,6 +110,40 @@ export const fetchFolders = createAsyncThunk(
         //.
         return rejectWithValue(
           "An unknown error occurred while fetching folders",
+        );
+      }
+    }
+  },
+);
+
+export const fetchFolderContents = createAsyncThunk(
+  "file/fetchFolderContents",
+  async (folderId: string, { rejectWithValue, getState }) => {
+    try {
+      const state = getState() as RootState;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("Token not found");
+      }
+
+      const response = await axios.get(
+        `${API_ENDPOINT}/folders/${folderId}/contents`,
+      );
+      return response.data;
+    } catch (err) {
+      console.error("Error fetching folder contents: ", err);
+
+      if (axios.isAxiosError(err)) {
+        return rejectWithValue(
+          err.response?.data?.message ||
+            "An error occurred wile fetching folder contents",
+        );
+      } else if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      } else {
+        return rejectWithValue(
+          "An unknown error occurred while fetching folder contents",
         );
       }
     }
@@ -263,6 +304,17 @@ const fileSlice = createSlice({
       .addCase(createFolder.rejected, (state, action) => {
         state.loading = false;
         state.error = (action.payload as string) || "Failed to create folder";
+      })
+      .addCase(fetchFolderContents.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchFolderContents.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentFolder = action.payload;
+      })
+      .addCase(fetchFolderContents.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

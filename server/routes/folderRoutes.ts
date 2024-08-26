@@ -5,6 +5,7 @@ import {
   fetchFolder,
   updateFolder,
   deleteFolder,
+  fetchFolderContents,
 } from "../controllers/folderController.ts";
 import auth from "../middleware/auth.ts";
 
@@ -15,5 +16,6 @@ router.get("/", auth, fetchFolders);
 router.get("/:id", auth, fetchFolder);
 router.put("/:id", auth, updateFolder);
 router.delete("/:id", auth, deleteFolder);
+router.get("/:id/contents", auth, fetchFolderContents);
 
 export default router;
