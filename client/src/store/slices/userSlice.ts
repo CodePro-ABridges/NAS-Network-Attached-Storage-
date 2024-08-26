@@ -68,6 +68,14 @@ export const loginUser = createAsyncThunk<UserResponse, LoginPayload>(
   },
 );
 
+export const logoutUser = createAsyncThunk(
+  "user/logout",
+  async (_, { dispatch }) => {
+    localStorage.removeItem("token");
+    dispatch(clearUser());
+  },
+);
+
 const initialState: UserState = {
   id: null,
   username: null,
@@ -152,6 +160,14 @@ export const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = "failed";
         state.error = action.payload as string;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.id = null;
+        state.username = null;
+        state.email = null;
+        state.isAuthenticated = false;
+        state.loading = "idle";
+        state.error = null;
       });
   },
 });

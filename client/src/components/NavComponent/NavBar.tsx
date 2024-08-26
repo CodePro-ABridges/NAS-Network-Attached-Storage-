@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaTachometerAlt,
@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { HiArrowRight } from "react-icons/hi2";
 import { useAppSelector, useAppDispatch } from "../../store/hooks.ts";
-import { clearUser } from "../../store/slices/userSlice.ts";
+import { logoutUser } from "../../store/slices/userSlice.ts";
 import { toggleNavbar } from "../../store/slices/navbarSlice.ts";
 
 const Navbar: React.FC = () => {
@@ -21,9 +21,13 @@ const Navbar: React.FC = () => {
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
   const dispatch = useAppDispatch();
 
+  //
+  const navigate = useNavigate();
+
   //TODO: Might add additional logic such as Upload, download.
   const handleLogout = () => {
-    dispatch(clearUser());
+    dispatch(logoutUser());
+    navigate("/");
   };
 
   const navbarVariants = {
